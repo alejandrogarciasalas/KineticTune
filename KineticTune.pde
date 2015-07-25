@@ -34,7 +34,7 @@ void setup() {
 void draw() {
 
   background(255, 255, 255);
-  fill(255);
+  fill(0);
   textMode(SCREEN);
   text("Kinect FR: " + (int)kinect.getDepthFPS() + "\nProcessing FR: " + (int)frameRate,10,16);
 
