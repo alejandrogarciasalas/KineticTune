@@ -15,12 +15,14 @@ float a = 0;
 int w = 640;
 int h = 480;
 
+//Artsy effect variables
+color c;
 
 // We'll use a lookup table so that we don't have to repeat the math over and over
 float[] depthLookUp = new float[2048];
 
 void setup() {
-  size(800,600,P3D);
+  size(displayWidth, displayHeight, P3D);
   kinect = new Kinect(this);
   kinect.start();
   kinect.enableDepth(true);
@@ -36,7 +38,7 @@ void setup() {
 
 void draw() {
 
-  background(0);
+  background(255, 255, 255);
   fill(255);
   textMode(SCREEN);
   text("Kinect FR: " + (int)kinect.getDepthFPS() + "\nProcessing FR: " + (int)frameRate,10,16);
@@ -45,7 +47,7 @@ void draw() {
   int[] depth = kinect.getRawDepth();
 
   // We're just going to calculate and draw every 4th pixel (equivalent of 160x120)
-  int skip = 4;
+  int skip = 10;
 
   // Translate and rotate
   translate(width/2,height/2,-50);
@@ -58,14 +60,20 @@ void draw() {
       // Convert kinect data to world xyz coordinate
       int rawDepth = depth[offset];
       PVector v = depthToWorld(x,y,rawDepth);
-
-      stroke(255);
+      
+      
+      color cmix = color(200, 100, 210); //color definition
+      c = generateRandomColor(cmix); //generates pseudo-random colors within a same palette based on the value of cmix
+      
+      stroke(c);
+      fill(c);
       pushMatrix();
       // Scale up by 200
       float factor = 200;
       translate(v.x*factor,v.y*factor,factor-v.z*factor);
       // Draw a point
-      point(0,0);
+      rect(0, 0, 3, 3);
+      //point(0, 0);
       popMatrix();
     }
   }
@@ -102,3 +110,21 @@ void stop() {
   super.stop();
 }
 
+
+/* function that returns a random color:
+    we average RGB values of random colors with those of a constant color (mix) in order to generate
+    an aesthetically pleasent color palette
+ */
+color generateRandomColor(color mix) {
+    int red = int(random(100,250));
+    int green = int(random(100,250));
+    int blue = int(random(100,250));
+
+    // mixing the color (averaging)
+    red = int((red + red(mix)) / 2);
+    green = int((green + green(mix)) / 2);
+    blue = int((blue + blue(mix)) / 2);
+ 
+    color c= color(red, green, blue);
+    return c;
+}
