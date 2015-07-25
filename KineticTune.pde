@@ -1,8 +1,3 @@
-// Daniel Shiffman
-// Kinect Point Cloud example
-// http://www.shiffman.net
-// https://github.com/shiffman/libfreenect/tree/master/wrappers/java/processing
-
 import org.openkinect.*;
 import org.openkinect.processing.*;
 
