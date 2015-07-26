@@ -1,6 +1,21 @@
 import org.openkinect.*;
 import org.openkinect.processing.*;
 
+import ddf.minim.*;  
+
+//Minim Library object
+Minim minim;                  
+AudioPlayer s;                
+
+//MINIM variables
+int sample=2000,                  
+numberOfModules = int(sqrt(sample)),              
+moduleSize = 50,                          
+amplyfingFactor = 50,         
+intialLengthOfTheSideOfTheContainer =numberOfModules*moduleSize;                     
+float[] sizeOfModules;                    
+float[] analysisOfCurrentSounds;   
+                
 // Kinect Library object
 Kinect kinect;
 
@@ -18,6 +33,21 @@ float[] depthLookUp = new float[2048];
 
 void setup() {
   size(displayWidth, displayHeight, P3D);
+  
+  //MINIM setup
+  minim = new Minim(this);
+  s = minim.loadFile("so-obvious.mp3", sample);
+  s.play(); //Minim settings                            
+
+  
+  sizeOfModules = new float[sample];
+  analysisOfCurrentSounds = new float[sample];
+  for (int i = 0; ++i < sample;) {
+      sizeOfModules[i] = 0;
+  }
+  
+  
+  
   kinect = new Kinect(this);
   kinect.start();
   kinect.enableDepth(true);
@@ -32,11 +62,13 @@ void setup() {
 }
 
 void draw() {
-
   background(255, 255, 255);
   fill(0);
   textMode(SCREEN);
   text("Kinect FR: " + (int)kinect.getDepthFPS() + "\nProcessing FR: " + (int)frameRate,10,16);
+  //MINIM
+  analysisOfCurrentSounds = s.mix.toArray(); 
+
 
   // Get the raw depth as array of integers
   int[] depth = kinect.getRawDepth();
@@ -101,6 +133,10 @@ PVector depthToWorld(int x, int y, int depthValue) {
 }
 
 void stop() {
+  //MINIM
+  s.close();
+  minim.stop();
+  //KINECT
   kinect.quit();
   super.stop();
 }
