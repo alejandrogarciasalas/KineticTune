@@ -1,6 +1,18 @@
 import org.openkinect.*;
 import org.openkinect.processing.*;
 
+import ddf.minim.*;  
+
+//Minim Library object
+Minim minim;                  
+AudioPlayer s;                
+
+//MINIM variables
+int sample=2000;                 
+float amplyfingFactor = 0.02;
+float[] sizeOfModules;                    
+float[] analysisOfCurrentSounds;   
+                
 // Kinect Library object
 Kinect kinect;
 
@@ -18,6 +30,21 @@ float[] depthLookUp = new float[2048];
 
 void setup() {
   size(displayWidth, displayHeight, P3D);
+  
+  //MINIM setup
+  minim = new Minim(this);
+  s = minim.loadFile("down-the-road.mp3", sample);
+  s.play(); //Minim settings                            
+
+  
+  sizeOfModules = new float[sample];
+  analysisOfCurrentSounds = new float[sample];
+  for (int i = 0; ++i < sample;) {
+      sizeOfModules[i] = 0;
+  }
+  
+  
+  
   kinect = new Kinect(this);
   kinect.start();
   kinect.enableDepth(true);
@@ -32,11 +59,13 @@ void setup() {
 }
 
 void draw() {
-
   background(255, 255, 255);
   fill(0);
   textMode(SCREEN);
   text("Kinect FR: " + (int)kinect.getDepthFPS() + "\nProcessing FR: " + (int)frameRate,10,16);
+  //MINIM
+  analysisOfCurrentSounds = s.mix.toArray(); 
+
 
   // Get the raw depth as array of integers
   int[] depth = kinect.getRawDepth();
@@ -55,8 +84,7 @@ void draw() {
       // Convert kinect data to world xyz coordinate
       int rawDepth = depth[offset];
       PVector v = depthToWorld(x,y,rawDepth);
-      
-      
+            
       color cmix = color(100, 200, 210); //color definition
       c = generateRandomColor(cmix); //generates pseudo-random colors within a same palette based on the value of cmix
       
@@ -67,8 +95,8 @@ void draw() {
       float factor = 200;
       translate(v.x*factor,v.y*factor,factor-v.z*factor);
       // Draw a point
-      rect(0, 0, 3, 3);
-      //point(0, 0);
+      box(sizeOfModules[x] += (analysisOfCurrentSounds[x] * amplyfingFactor));
+      //rect(0, 0, 3, 3); //uncomment if you don't want sound analysis
       popMatrix();
     }
   }
@@ -101,6 +129,10 @@ PVector depthToWorld(int x, int y, int depthValue) {
 }
 
 void stop() {
+  //MINIM
+  s.close();
+  minim.stop();
+  //KINECT
   kinect.quit();
   super.stop();
 }
