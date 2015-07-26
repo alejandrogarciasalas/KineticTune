@@ -96,7 +96,7 @@ void draw() {
       translate(v.x*factor,v.y*factor,factor-v.z*factor);
       // Draw a point
       box(sizeOfModules[x] += (analysisOfCurrentSounds[x] * amplyfingFactor));
-      //point(0, 0);
+      //rect(0, 0, 3, 3); //uncomment if you don't want sound analysis
       popMatrix();
     }
   }
