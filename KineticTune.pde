@@ -10,9 +10,9 @@ AudioPlayer s;
 //MINIM variables
 int sample=2000,                  
 numberOfModules = int(sqrt(sample)),              
-moduleSize = 50,                          
-amplyfingFactor = 50,         
-intialLengthOfTheSideOfTheContainer =numberOfModules*moduleSize;                     
+moduleSize = 3,                                 
+intialLengthOfTheSideOfTheContainer =numberOfModules*moduleSize;  
+float amplyfingFactor = 0.02;
 float[] sizeOfModules;                    
 float[] analysisOfCurrentSounds;   
                 
@@ -36,7 +36,7 @@ void setup() {
   
   //MINIM setup
   minim = new Minim(this);
-  s = minim.loadFile("so-obvious.mp3", sample);
+  s = minim.loadFile("down-the-road.mp3", sample);
   s.play(); //Minim settings                            
 
   
@@ -99,7 +99,7 @@ void draw() {
       float factor = 200;
       translate(v.x*factor,v.y*factor,factor-v.z*factor);
       // Draw a point
-      box(3, 3, 3);
+      box(sizeOfModules[x] += (analysisOfCurrentSounds[x] * amplyfingFactor));
       //point(0, 0);
       popMatrix();
     }
