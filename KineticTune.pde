@@ -67,7 +67,7 @@ void draw() {
       float factor = 200;
       translate(v.x*factor,v.y*factor,factor-v.z*factor);
       // Draw a point
-      rect(0, 0, 3, 3);
+      box(3, 3, 3);
       //point(0, 0);
       popMatrix();
     }
