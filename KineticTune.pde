@@ -1,3 +1,10 @@
+/*
+KineticTune
+ by Alejandro García Salas
+ 
+a particle cloud that responds to movement and music
+*/
+
 import org.openkinect.*;
 import org.openkinect.processing.*;
 
