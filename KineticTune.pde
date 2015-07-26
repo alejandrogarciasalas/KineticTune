@@ -8,10 +8,7 @@ Minim minim;
 AudioPlayer s;                
 
 //MINIM variables
-int sample=2000,                  
-numberOfModules = int(sqrt(sample)),              
-moduleSize = 3,                                 
-intialLengthOfTheSideOfTheContainer =numberOfModules*moduleSize;  
+int sample=2000;                 
 float amplyfingFactor = 0.02;
 float[] sizeOfModules;                    
 float[] analysisOfCurrentSounds;   
@@ -87,8 +84,7 @@ void draw() {
       // Convert kinect data to world xyz coordinate
       int rawDepth = depth[offset];
       PVector v = depthToWorld(x,y,rawDepth);
-      
-      
+            
       color cmix = color(100, 200, 210); //color definition
       c = generateRandomColor(cmix); //generates pseudo-random colors within a same palette based on the value of cmix
       
