@@ -57,7 +57,7 @@ void draw() {
       PVector v = depthToWorld(x,y,rawDepth);
       
       
-      color cmix = color(200, 100, 210); //color definition
+      color cmix = color(100, 200, 210); //color definition
       c = generateRandomColor(cmix); //generates pseudo-random colors within a same palette based on the value of cmix
       
       stroke(c);
