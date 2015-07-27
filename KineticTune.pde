@@ -25,6 +25,7 @@ Minim minim;
 AudioPlayer s;    
 
 //Beat detection
+FFT fft;
 BeatDetect beat;
 BeatListener blistener;
 float buffersize;
