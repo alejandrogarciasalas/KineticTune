@@ -1,3 +1,4 @@
+
 /*
 KineticTune
  by Alejandro García Salas
@@ -7,14 +8,26 @@ a particle cloud that responds to movement and music
 
 String audiofilename = "top-of-the-world.mp3"; // The audio source to use.
 
+//BEATS
+int BEAT_DETECTION_SENSITIVITY = 50;
+int SKIP_BEATS = 1;
+int skip_beat_counter = 0;
+
+
 import org.openkinect.*;
 import org.openkinect.processing.*;
 
+import ddf.minim.analysis.*;
 import ddf.minim.*;  
 
 //Minim Library object
 Minim minim;                  
-AudioPlayer s;                
+AudioPlayer s;    
+
+//Beat detection
+BeatDetect beat;
+BeatListener blistener;
+float buffersize;
 
 //MINIM variables
 int sample=2000;                 
@@ -52,7 +65,11 @@ void setup() {
       sizeOfModules[i] = 0;
   }
   
-  
+  //BEATS
+  beat = new BeatDetect(player.bufferSize(), player.sampleRate());
+  beat = new BeatDetect(player.bufferSize(), player.sampleRate());
+  beat.setSensitivity(BEAT_DETECTION_SENSITIVITY);
+  blistener = new BeatListener(beat, s);
   
   kinect = new Kinect(this);
   kinect.start();
