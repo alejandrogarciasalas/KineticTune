@@ -5,6 +5,8 @@ KineticTune
 a particle cloud that responds to movement and music
 */
 
+String audiofilename = "top-of-the-world.mp3"; // The audio source to use.
+
 import org.openkinect.*;
 import org.openkinect.processing.*;
 
@@ -40,7 +42,7 @@ void setup() {
   
   //MINIM setup
   minim = new Minim(this);
-  s = minim.loadFile("down-the-road.mp3", sample);
+  s = minim.loadFile(audiofilename, sample);
   s.play(); //Minim settings                            
 
   
